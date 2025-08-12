@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  fhoss-mysql:
+    image: mysql:8.0
+    container_name: fhoss-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: fhoss_db
+      MYSQL_USER: fhoss
+      MYSQL_PASSWORD: fhospass
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ims-net
+
+  fhoss:
+    image: gradiant/fhoss:develop
+    container_name: fhoss
+    ports:
+      - "8080:8080"
+    depends_on:
+      - fhoss-mysql
+    environment:
+      MYSQL_IP: fhoss-mysql
+      FHOSS_IP: fhoss
+      DNS_IP: 8.8.8.8
+      MYSQL_USER: fhoss
+      MYSQL_PASSWORD: fhospass
+      MYSQL_DATABASE: fhoss_db
+    networks:
+      - ims-net
+
+  kamailio:
+    image: kamailio/kamailio-ci
+    container_name: kamailio
+    network_mode: "host"
+    volumes:
+      - ./kamailio:/etc/kamailio
+    command: >
+      kamailio -m 64 -M 8
+    depends_on:
+      - fhoss
+
+volumes:
+  mysql_data:
+
+networks:
+  ims-net:
+    driver: bridge
+
