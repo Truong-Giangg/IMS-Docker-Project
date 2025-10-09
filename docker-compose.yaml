@@ -4,43 +4,62 @@ services:
   fhoss-mysql:
     image: mysql:8.0
     container_name: fhoss-mysql
-    ports:
-      - "3306:3306"
+    command: ["--default-authentication-plugin=mysql_native_password"]
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: fhoss_db
       MYSQL_USER: fhoss
-      MYSQL_PASSWORD: fhospass
+      MYSQL_PASSWORD: fhosspass
+    ports: ["3306:3306"]
     volumes:
       - mysql_data:/var/lib/mysql
-    networks:
-      - ims-net
+    networks: [ims-net]
 
   fhoss:
     image: gradiant/fhoss:develop
     container_name: fhoss
-    ports:
-      - "8080:8080"
-    depends_on:
-      - fhoss-mysql
     environment:
       MYSQL_IP: fhoss-mysql
       FHOSS_IP: fhoss
-      DNS_IP: 8.8.8.8
       MYSQL_USER: fhoss
-      MYSQL_PASSWORD: fhospass
+      MYSQL_PASSWORD: fhosspass
       MYSQL_DATABASE: fhoss_db
-    networks:
-      - ims-net
+    ports:
+      - "8080:8080"
+      - "3868:3868"
+    depends_on: [fhoss-mysql]
+    networks: [ims-net]
 
-  kamailio:
-    image: kamailio/kamailio-ci
-    container_name: kamailio
+  # P-CSCF
+  kamailio-pcscf:
+    image: local/kamailio-ims:6.0.3
+    container_name: kamailio-pcscf
     network_mode: "host"
     volumes:
-      - ./kamailio:/etc/kamailio
-    command: >
-      kamailio -m 64 -M 8
+      - ./kamailio/pcscf:/etc/kamailio:ro
+    command: kamailio -f /etc/kamailio/kamailio.cfg -DD -E
+    depends_on:
+      - fhoss
+
+  # I-CSCF
+  kamailio-icscf:
+    image: local/kamailio-ims:6.0.3
+    container_name: kamailio-icscf
+    network_mode: "host"
+    volumes:
+      - ./kamailio/icscf:/etc/kamailio:ro
+    command: kamailio -f /etc/kamailio/kamailio.cfg -DD -E
+    depends_on:
+      - fhoss
+
+  # S-CSCF
+  kamailio-scscf:
+    image: local/kamailio-ims:6.0.3
+    container_name: kamailio-scscf
+    network_mode: "host"
+    volumes:
+      - ./kamailio/scscf:/etc/kamailio:ro
+    command: kamailio -f /etc/kamailio/kamailio.cfg -DD -E
     depends_on:
       - fhoss
 
@@ -50,4 +69,3 @@ volumes:
 networks:
   ims-net:
     driver: bridge
-

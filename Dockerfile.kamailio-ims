@@ -1,0 +1,6 @@
+# Dockerfile.kamailio-ims (updated)
+FROM ghcr.io/kamailio/kamailio:6.0.3-focal
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+      kamailio kamailio-ims-modules kamailio-outbound-modules kamailio-extra-modules \
+ && rm -rf /var/lib/apt/lists/*
