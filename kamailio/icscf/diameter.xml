@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DiameterPeer
+  FQDN="icscf.local"
+  Realm="ims.local"
+  Vendor_Id="10415"
+  Product_Name="CDiameterPeer"
+  AcceptUnknownPeers="1"
+  DropUnknownOnDisconnect="1"
+  Tc="30"
+  Workers="8"
+  QueueLength="32"
+  TransactionTimeout="3600"
+  SessionsHashSize="256"
+  DefaultAuthSessionTimeout="3600"
+  MaxAuthSessionTimeout="3600">
+
+  <Peer FQDN="127.0.0.1" Realm="ims.local" port="3868"/>
+  <Acceptor port="3871" bind="0.0.0.0"/>
+
+  <Auth id="16777216" vendor="10415"/>
+  <SupportedVendor vendor="10415"/>
+
+  <DefaultRoute FQDN="127.0.0.1" metric="10"/>
+</DiameterPeer>

@@ -1,4 +1,4 @@
-# Dockerfile.kamailio-ims (updated)
+# Dockerfile.kamailio-ims
 FROM ghcr.io/kamailio/kamailio:6.0.3-focal
 RUN apt-get update \
  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
