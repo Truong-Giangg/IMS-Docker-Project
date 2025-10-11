@@ -10,18 +10,21 @@
   Workers="8"
   QueueLength="32"
   TransactionTimeout="3600"
-  SessionsHashSize="256"
+  SessionsHashSize="128"
   DefaultAuthSessionTimeout="3600"
   MaxAuthSessionTimeout="3600">
 
-  <Peer FQDN="127.0.0.1" Realm="ims.local" port="3868"/>
-  <Acceptor port="3872" bind="0.0.0.0"/>
+  <!-- HSS peer: must match FHOSS Origin-Host/Realm and port -->
+  <Peer FQDN="hss.local" Realm="ims.local" port="3868"/>
 
-  <!-- 3GPP Cx (and optionally Sh) -->
+  <!-- Where this node listens for inbound Diameter (not mandatory if you only initiate) -->
+  <Acceptor port="3872" bind="127.0.0.1"/>
+
+  <!-- 3GPP Cx -->
   <Auth id="16777216" vendor="10415"/>
-  <Auth id="16777217" vendor="10415"/>
 
+  <!-- Supported vendors -->
   <SupportedVendor vendor="10415"/>
 
-  <DefaultRoute FQDN="127.0.0.1" metric="10"/>
+  <DefaultRoute FQDN="hss.local" metric="10"/>
 </DiameterPeer>

@@ -15,7 +15,7 @@
   MaxAuthSessionTimeout="3600">
 
   <Peer FQDN="127.0.0.1" Realm="ims.local" port="3868"/>
-  <Acceptor port="3870" bind="0.0.0.0"/>
+  <Acceptor port="3870" bind="127.0.0.1"/>
 
   <Auth id="16777216" vendor="10415"/>
   <SupportedVendor vendor="10415"/>

@@ -20,11 +20,12 @@ services:
     ports: ["8080:8080", "3868:3868"]     # HSS (web + diameter)
     depends_on: [fhoss-mysql]
     environment:
+      MYSQL_HOST: fhoss-mysql
       MYSQL_IP: fhoss-mysql
       FHOSS_IP: fhoss
       DNS_IP: 8.8.8.8
       MYSQL_USER: fhoss
-      MYSQL_PASSWORD: fhosspass
+      MYSQL_PASSWORD: fhospass
       MYSQL_DATABASE: fhoss_db
     networks: [ims-net]
 
