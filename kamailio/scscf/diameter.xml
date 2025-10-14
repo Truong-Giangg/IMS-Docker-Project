@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DiameterPeer
-  FQDN="scscf.local"
+  FQDN="scscf.ims.local"
   Realm="ims.local"
   Vendor_Id="10415"
   Product_Name="CDiameterPeer"
@@ -15,10 +15,10 @@
   MaxAuthSessionTimeout="3600">
 
   <!-- HSS peer: must match FHOSS Origin-Host/Realm and port -->
-  <Peer FQDN="hss.local" Realm="ims.local" port="3868"/>
+  <Peer FQDN="hss.ims.local" Realm="ims.local" port="3868"/>
 
   <!-- Where this node listens for inbound Diameter (not mandatory if you only initiate) -->
-  <Acceptor port="3872" bind="127.0.0.1"/>
+  <Acceptor port="3870" bind="0.0.0.0"/>
 
   <!-- 3GPP Cx -->
   <Auth id="16777216" vendor="10415"/>
@@ -26,5 +26,5 @@
   <!-- Supported vendors -->
   <SupportedVendor vendor="10415"/>
 
-  <DefaultRoute FQDN="hss.local" metric="10"/>
+  <DefaultRoute FQDN="hss.ims.local" metric="10"/>
 </DiameterPeer>
