@@ -4,8 +4,8 @@ services:
   fhoss-mysql:
     image: mysql:8.0
     container_name: fhoss-mysql
-    ports: ["3306:3306"]
-    command: ["--default-authentication-plugin=mysql_native_password"]
+    ports: [ "3306:3306" ]
+    command: [ "--default-authentication-plugin=mysql_native_password" ]
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: hss_db
@@ -22,8 +22,8 @@ services:
     # volumes:
     #   - ./fhoss-config/DiameterPeerHSS.xml:/opt/OpenIMSCore/FHoSS/config/DiameterPeerHSS.xml
     container_name: fhoss
-    ports: ["8080:8080", "3868:3868"]     # HSS (web + diameter)
-    depends_on: [fhoss-mysql]
+    ports: [ "8080:8080", "3868:3868" ] # HSS (web + diameter)
+    depends_on: [ fhoss-mysql ]
     environment:
       IMS_DOMAIN: ims.local
       MYSQL_HOST: fhoss-mysql
@@ -47,10 +47,10 @@ services:
     command: >
       bash -lc 'kamailio -f /etc/kamailio/kamailio.cfg -m 64 -M 8 -DD -E'
     ports:
-      - "4060:4060/tcp"
-      - "4060:4060/udp"
-      - "3871:3871/tcp"     # Diameter acceptor for P-CSCF, if you configured it
-    depends_on: [fhoss]
+      - "5080:4060/tcp"
+      - "5080:4060/udp"
+      - "3871:3871/tcp" # Diameter acceptor for P-CSCF, if you configured it
+    depends_on: [ fhoss ]
     networks:
       ims-net:
         aliases: [ "pcscf.ims.local" ]
@@ -66,11 +66,11 @@ services:
     ports:
       - "5060:5060/tcp"
       - "5060:5060/udp"
-      - "3869:3869/tcp"     # Diameter acceptor for I-CSCF
+      - "3869:3869/tcp" # Diameter acceptor for I-CSCF
     networks:
       ims-net:
         aliases: [ "icscf.ims.local" ]
-    depends_on: [fhoss]
+    depends_on: [ fhoss ]
 
   # ------- S-CSCF -------
   kamailio-scscf:
@@ -83,14 +83,15 @@ services:
     ports:
       - "6060:6060/tcp"
       - "6060:6060/udp"
-      - "3870:3870/tcp"     # Diameter acceptor for S-CSCF
+      - "3870:3870/tcp" # Diameter acceptor for S-CSCF
     networks:
       ims-net:
         aliases: [ "scscf.ims.local" ]
-    depends_on: [fhoss]
+    depends_on: [ fhoss ]
 
 volumes:
   mysql_data:
+
 
 networks:
   ims-net:
