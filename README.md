@@ -60,6 +60,12 @@ This step:
 - Installs IMS-related modules (`kamailio-ims-modules`, `kamailio-extra-modules`, etc.)  
 - Produces a ready-to-run image: `local/kamailio-ims:6.0.3`
 
+### 3️⃣ Add host manually
+
+```bash
+echo "127.0.0.1   pcscf.ims.local icscf.ims.local scscf.ims.local hss.ims.local ims.local" | sudo tee -a /etc/hosts
+```
+
 ### 4️⃣ Launch the Services
 
 ```bash
@@ -147,6 +153,20 @@ FLUSH PRIVILEGES;
 "
 ```
 
+### 🔹 Create credential root for FHoSS
+
+```bash
+docker exec -it fhoss sh -lc '
+  cat > /root/.my.cnf <<EOF
+[client]
+user=root
+password=rootpass
+host=fhoss-mysql
+EOF
+  chmod 600 /root/.my.cnf
+'
+```
+
 ### 🔹 Insert Default Subscriber Data
 
 ```bash
@@ -178,13 +198,19 @@ sudo ss -lpun | egrep ':4060|:5060|:6060|:3868'
 ### 🔹 Test S-CSCF Node
 
 ```bash
-sipsak -s sip:any@scscf.local:6060 -vv
+sipsak -s sip:any@scscf.ims.local:6060 -vv
+```
+
+### 🔹 Test FHoSS log
+
+```bash
+docker logs -f fhoss | egrep -i 'Diameter|Peer|Realm|FQDN|StateMachine'
 ```
 
 ### 🔹 Register a SIP User (Alice)
 
 ```bash
-sipsak -U -s sip:alice@scscf.local -p scscf.local:6060 -a 'alice' -C sip:alice@127.0.1.1:36518 -x 600 -vv
+sipsak -U   -s sip:alice@ims.local:6060   -u alice   -a 'alice'   -vv
 ```
 
 ### 🔹 Capture All IMS Traffic
