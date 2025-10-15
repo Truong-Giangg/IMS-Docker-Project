@@ -13,6 +13,12 @@ services:
       MYSQL_PASSWORD: hss
     volumes:
       - mysql_data:/var/lib/mysql
+      - ./db:/docker-entrypoint-initdb.d:ro
+    healthcheck:                  
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-prootpass"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
     networks:
       ims-net:
         aliases: [ "fhoss-mysql" ]
