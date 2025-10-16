@@ -25,13 +25,13 @@ services:
 
   fhoss:
     image: gradiant/fhoss:develop
-    # volumes:
-    #   - ./fhoss-config/DiameterPeerHSS.xml:/opt/OpenIMSCore/FHoSS/config/DiameterPeerHSS.xml
+    volumes:
+      - ./fhoss-config/DiameterPeerHSS.xml:/opt/OpenIMSCore/FHoSS/config/DiameterPeerHSS.xml
     container_name: fhoss
     ports: [ "8080:8080", "3868:3868" ] # HSS (web + diameter)
     depends_on: [ fhoss-mysql ]
     environment:
-      IMS_DOMAIN: ims.local
+      IMS_DOMAIN: ims.sipify
       MYSQL_HOST: fhoss-mysql
       MYSQL_IP: fhoss-mysql
       FHOSS_IP: fhoss

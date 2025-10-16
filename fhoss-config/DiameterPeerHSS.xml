@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DiameterPeer
-    FQDN="hss.ims.local"
-    Realm="ims.local"
+    FQDN="hss.ims.sipify"
+    Realm="ims.sipify"
     Vendor_Id="10415"
     Product_Name="JavaDiameterPeer"
     AcceptUnknownPeers="1"
@@ -18,9 +18,9 @@
     <Acceptor port="3868" bind="0.0.0.0"/>
 
     <!-- Peers (use the same FQDNs and ports your Kamailio XMLs advertise) -->
-    <Peer FQDN="pcscf.ims.local" Realm="ims.local" port="3871"/>
-    <Peer FQDN="icscf.ims.local" Realm="ims.local" port="3869"/>
-    <Peer FQDN="scscf.ims.local" Realm="ims.local" port="3870"/>
+    <Peer FQDN="pcscf.ims.sipify" Realm="ims.sipify" port="3871"/>
+    <Peer FQDN="icscf.ims.sipify" Realm="ims.sipify" port="3869"/>
+    <Peer FQDN="scscf.ims.sipify" Realm="ims.sipify" port="3870"/>
 
     <!-- 3GPP Cx application -->
     <Auth id="16777216" vendor="10415"/>
@@ -29,5 +29,5 @@
     <SupportedVendor vendor="10415"/>
 
     <!-- Optional default route to one of the peers -->
-    <DefaultRoute FQDN="icscf.ims.local" metric="10"/>
+    <DefaultRoute FQDN="icscf.ims.sipify" metric="10"/>
 </DiameterPeer>
