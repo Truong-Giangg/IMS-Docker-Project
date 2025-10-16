@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DiameterPeer
-  FQDN="pcscf.ims.local"
-  Realm="ims.local"
+  FQDN="pcscf.ims.sipify"
+  Realm="ims.sipify"
   Vendor_Id="10415"
   Product_Name="CDiameterPeer"
   AcceptUnknownPeers="1"
@@ -14,7 +14,7 @@
   DefaultAuthSessionTimeout="3600"
   MaxAuthSessionTimeout="3600">
 
-  <Peer FQDN="hss.ims.local" Realm="ims.local" port="3868"/>
+  <Peer FQDN="hss.ims.sipify" Realm="ims.sipify" port="3868"/>
   <Acceptor port="3871" bind="0.0.0.0"/>
 
   <Auth id="16777216" vendor="10415"/>

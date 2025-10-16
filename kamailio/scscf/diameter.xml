@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <DiameterPeer
-  FQDN="scscf.ims.local"
-  Realm="ims.local"
+  FQDN="scscf.ims.sipify"
+  Realm="ims.sipify"
   Vendor_Id="10415"
   Product_Name="CDiameterPeer"
   AcceptUnknownPeers="1"
@@ -15,7 +15,7 @@
   MaxAuthSessionTimeout="3600">
 
   <!-- HSS peer: must match FHOSS Origin-Host/Realm and port -->
-  <Peer FQDN="hss.ims.local" Realm="ims.local" port="3868"/>
+  <Peer FQDN="hss.ims.sipify" Realm="ims.sipify" port="3868"/>
 
   <!-- Where this node listens for inbound Diameter (not mandatory if you only initiate) -->
   <Acceptor port="3870" bind="0.0.0.0"/>
@@ -26,5 +26,5 @@
   <!-- Supported vendors -->
   <SupportedVendor vendor="10415"/>
 
-  <DefaultRoute FQDN="hss.ims.local" metric="10"/>
+  <DefaultRoute FQDN="hss.ims.sipify" metric="10"/>
 </DiameterPeer>

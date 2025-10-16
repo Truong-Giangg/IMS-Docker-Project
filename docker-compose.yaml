@@ -42,7 +42,7 @@ services:
       MYSQL_DATABASE: hss_db
     networks:
       ims-net:
-        aliases: [ "hss.ims.local", "fhoss" ]
+        aliases: [ "hss.ims.sipify", "fhoss" ]
 
   # ------- P-CSCF -------
   kamailio-pcscf:
@@ -59,7 +59,7 @@ services:
     depends_on: [ fhoss ]
     networks:
       ims-net:
-        aliases: [ "pcscf.ims.local" ]
+        aliases: [ "pcscf.ims.sipify" ]
 
   # ------- I-CSCF -------
   kamailio-icscf:
@@ -75,7 +75,7 @@ services:
       - "3869:3869/tcp" # Diameter acceptor for I-CSCF
     networks:
       ims-net:
-        aliases: [ "icscf.ims.local" ]
+        aliases: [ "icscf.ims.sipify" ]
     depends_on: [ fhoss ]
 
   # ------- S-CSCF -------
@@ -92,7 +92,7 @@ services:
       - "3870:3870/tcp" # Diameter acceptor for S-CSCF
     networks:
       ims-net:
-        aliases: [ "scscf.ims.local" ]
+        aliases: [ "scscf.ims.sipify" ]
     depends_on: [ fhoss ]
 
 volumes:
